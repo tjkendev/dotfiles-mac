@@ -7,11 +7,14 @@ Mac用のdotfiles
   - bash-completion
   - wine
   - nvm
+  - npm
+- nodebrew
+  - node
 - rbenv
 - jenv
 - pyenv
-- nodebrew
-  - node
+- typescript
+- typescript-tools
 - zsh
 - vim
   - NeoBundle
