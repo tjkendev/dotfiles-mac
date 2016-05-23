@@ -221,6 +221,15 @@ NeoBundle 'kchmck/vim-coffee-script'
 NeoBundle 'groenewege/vim-less'
 NeoBundle 'moll/vim-node'
 NeoBundle 'digitaltoad/vim-jade'
+"" typescript
+NeoBundleLazy 'leafgarland/typescript-vim', {
+      \ 'autoload' : {
+      \   'filetypes' : ['typescript'] }
+      \}
+NeoBundleLazy 'clausreinke/typescript-tools.vim', {
+      \ 'autoload' : {
+      \   'filetypes' : ['typescript'] }
+      \}
 "" Haskell
 NeoBundle 'kana/vim-filetype-haskell'
 NeoBundle 'eagletmt/ghcmod-vim'
