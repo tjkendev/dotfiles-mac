@@ -116,13 +116,16 @@ alias winegcc32='WINEARCH=win32 WINEPREFIX=~/.wine32 winegcc'
 alias wineg++32='WINEARCH=win32 WINEPREFIX=~/.wine32 wineg++'
 alias winepath32='WINEARCH=win32 WINEPREFIX=~/.wine32 winepath'
 
-#alias winetricks32='WINEARCH=win32 WINEPREFIX=~/.wine32 winetricks'
+alias winetricks32='WINEARCH=win32 WINEPREFIX=~/.wine32 winetricks'
+alias winetricks64='WINEARCH=win64 WINEPREFIX=~/.wine winetricks'
 
 # Java
 #JAVA_HOME=$(readlink -f /usr/bin/javac | sed "s:/bin/javac::")
 #export JAVA_HOME
 #PATH=$PATH:$JAVA_HOME/bin
 #export PATH
+
+export PATH="~/usr/bin:$PATH"
 
 # Windowsの"a --> a.exe"みたいな感じ
 alias a='./a.out'
@@ -131,12 +134,24 @@ alias a='./a.out'
 alias h='history'
 
 # nvm
-source ~/.nvm/nvm.sh
+if [ -d ~/.nvm ]; then
+  source ~/.nvm/nvm.sh
+  nvm use 7.5.0
+fi
+
+# npm
+if type npm &>/dev/null; then
+  export NODE_PATH=$(npm root -g)
+fi
 
 # rbenv
-export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"
+if [ -d ~/.rbenv ]; then
+  export PATH="$HOME/.rbenv/bin:$PATH"
+  eval "$(rbenv init -)"
+fi
 
 # pbcopy
 alias pbcopy='xsel --clipboard --input'
 
+# mysql
+export PATH=/usr/local/mysql/bin:$PATH

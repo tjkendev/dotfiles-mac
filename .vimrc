@@ -135,6 +135,8 @@ augroup cpp-path
     autocmd FileType cpp setlocal path+=.,/usr/include,/usr/local/include,/usr/include/c++/4.8.1
 augroup END
 
+let $PATH = "~/.pyenv/shims:".$PATH
+
 """ NeoBundle """
 filetype off
 
@@ -214,7 +216,16 @@ NeoBundleLazy 'vim-scripts/javacomplete', {
 \   },
 \}
 " python
+"NeoBundleLazy "lambdalisue/vim-django-support", {
+"      \ "autoload": {
+"      \   "filetypes": ["python", "python3", "djangohtml"]
+"      \ }}
 NeoBundle 'davidhalter/jedi-vim'
+"NeoBundleLazy "lambdalisue/vim-pyenv", {
+"      \ "depends": ['davidhalter/jedi-vim'],
+"      \ "autoload": {
+"      \   "filetypes": ["python", "python3", "djangohtml"]
+"      \ }}
 "" javascript / node.js
 NeoBundle 'jelera/vim-javascript-syntax'
 NeoBundle 'kchmck/vim-coffee-script'
