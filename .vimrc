@@ -502,10 +502,14 @@ autocmd QuickFixCmdPost *grep* cwindow
 let g:syntastic_cpp_compiler_options = '-std=c++11 -stdlib=libc++'
 " ASM use -m32
 let g:syntastic_asm_compiler_options = '-m32'
-" use pyflakes and pep8
+" use pyflakes and pep8 to check python program
+" require pyflakes and pep8 (pip)
 let g:syntastic_python_checkers = ['pyflakes', 'pep8']
 " pep8のErrorCheck僕には厳しいので少し緩めに
 let g:syntastic_python_pep8_args='--ignore=E302,E501,E225,E226,E228,E265,E702,E703'
+" use eslint to check js program
+" require eslint and babel-eslint (npm)
+let g:syntastic_javascript_checkers = ['eslint']
 " SyntasticToggleMode を F4 で切り替え
 noremap <silent><F4> :SyntasticToggleMode<CR>
 
