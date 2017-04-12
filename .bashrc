@@ -139,7 +139,7 @@ if [ -d ~/.nvm ]; then
 fi
 
 # npm
-if type npm &>/dev/null; then
+if which npm &>/dev/null; then
   export NODE_PATH=$(npm root -g)
 fi
 

@@ -228,6 +228,7 @@ NeoBundle 'davidhalter/jedi-vim'
 "      \ }}
 "" javascript / node.js
 NeoBundle 'jelera/vim-javascript-syntax'
+NeoBundle 'mxw/vim-jsx'
 NeoBundle 'kchmck/vim-coffee-script'
 NeoBundle 'groenewege/vim-less'
 NeoBundle 'moll/vim-node'
@@ -253,6 +254,8 @@ NeoBundle 'derekwyatt/vim-scala'
 NeoBundle 'mattn/emmet-vim'
 NeoBundle 'tyru/open-browser.vim'
 NeoBundle 'hail2u/vim-css3-syntax'
+" Elixir
+NeoBundle 'elixir-lang/vim-elixir'
 "NeoBundle 'AtsushiM/search-parent.vim'
 "NeoBundle 'AtsushiM/sass-compile.vim'
 NeoBundle 'othree/html5.vim'
@@ -576,6 +579,9 @@ let g:tex_conceal=''
 "" TweetVim
 " ツイート内容は改行する
 autocmd FileType tweetvim :set wrap
+
+"" ==== JavaScript ====
+let g:jsx_ext_required = 0
 
 " after command
 set showcmd

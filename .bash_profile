@@ -1,4 +1,5 @@
-export PATH=/usr/local:$PATH
+export PATH=/usr/local/bin:$PATH
+eval $(/usr/libexec/path_helper -s)
 
 if [ -f ~/.bashrc ]; then
   . ~/.bashrc

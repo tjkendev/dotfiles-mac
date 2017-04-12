@@ -93,3 +93,4 @@ alias winefile32='WINEARCH=win32 WINEPREFIX=~/.wine32 winefile'
 alias winegcc32='WINEARCH=win32 WINEPREFIX=~/.wine32 winegcc'
 alias wineg++32='WINEARCH=win32 WINEPREFIX=~/.wine32 wineg++'
 alias winepath32='WINEARCH=win32 WINEPREFIX=~/.wine32 winepath'
+eval $(/usr/libexec/path_helper -s)
