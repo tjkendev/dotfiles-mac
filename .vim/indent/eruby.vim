@@ -50,9 +50,9 @@ function! GetErubyIndent(...)
   else
     exe "let ind = ".b:eruby_subtype_indentexpr
   endif
-  let lnum = prevnonblank(v:lnum-1) "" 一行前 (not blank)
-  let line = getline(lnum)          "" 一行前の内容
-  let cline = getline(v:lnum)       "" 今回の行の内容
+  let lnum = prevnonblank(v:lnum-1)
+  let line = getline(lnum)
+  let cline = getline(v:lnum)
 
   if cline =~# '^\s*<%[-=]\=\s*\%(}\|end\|else\|\%(ensure\|rescue\|elsif\|when\).\{-\}\)\s*\%([-=]\=%>\|$\)'
     let ind = ind - &sw
