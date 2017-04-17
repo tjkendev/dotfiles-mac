@@ -203,6 +203,8 @@ NeoBundle 'tpope/vim-fugitive'
 " ruby
 NeoBundle 'tpope/vim-rails'
 NeoBundle 'tpope/vim-endwise'
+NeoBundle 'bbatsov/rubocop'
+NeoBundle 'basyura/unite-rails'
 " c++
 NeoBundleLazy 'vim-jp/cpp-vim', {
       \ 'autoload' : {'filetypes' : 'cpp'}
@@ -254,12 +256,12 @@ NeoBundle 'derekwyatt/vim-scala'
 NeoBundle 'mattn/emmet-vim'
 NeoBundle 'tyru/open-browser.vim'
 NeoBundle 'hail2u/vim-css3-syntax'
-" Elixir
-NeoBundle 'elixir-lang/vim-elixir'
 "NeoBundle 'AtsushiM/search-parent.vim'
 "NeoBundle 'AtsushiM/sass-compile.vim'
 NeoBundle 'othree/html5.vim'
 NeoBundle 'lilydjwg/colorizer'
+" Elixir
+NeoBundle 'elixir-lang/vim-elixir'
 " css
 "NeoBundle 'skammer/vim-css-color'
 "" gnuplot
@@ -582,6 +584,12 @@ autocmd FileType tweetvim :set wrap
 
 "" ==== JavaScript ====
 let g:jsx_ext_required = 0
+
+"" ==== html5.vim ====
+let g:html5_event_handler_attributes_complete = 1
+let g:html5_rdfa_attributes_complete = 1
+let g:html5_microdata_attributes_complete = 1
+let g:html5_aria_attributes_complete = 1
 
 " after command
 set showcmd
