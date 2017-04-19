@@ -1,0 +1,14 @@
+{
+  "Keymap": {
+    "C-k": "peco.SelectUp",
+    "C-j": "peco.SelectDown",
+    "Esc": "peco.DeleteAll"
+  },
+  "Style": {
+    "Basic": ["on_default", "default"],
+    "SavedSelection": ["bold", "on_yellow", "white"],
+    "Selected": ["underline", "on_white", "black"],
+    "Query": ["yellow", "bold"],
+    "Matched": ["red"]
+  }
+}

@@ -1,5 +1,16 @@
+# Python IDLE
 .idlerc/recent-files.lst
+
+# IPython
 .ipython/profile_default/history.sqlite
+
+# Vim
 .vim/swap
 .vim/bundle
 .vim/.netrwhist
+
+# .config
+.config/configstore
+.config/stetic
+.config/menus
+.config/xbuild

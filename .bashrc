@@ -157,3 +157,15 @@ alias pbcopy='xsel --clipboard --input'
 
 # mysql
 export PATH=/usr/local/mysql/bin:$PATH
+
+# peco
+if which peco &>/dev/null; then
+  function agvim () {
+    if [ $# -gt 0 -a "$@" != "-h" ];then
+      result=$(ag $@ | peco --query "$LBUFFER" | awk -F : '{print "-c " $2 " " $1}')
+      [ -n "$result" ] && vim $result
+    else
+      ag -h
+    fi
+  }
+fi
