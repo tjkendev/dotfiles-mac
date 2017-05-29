@@ -138,8 +138,8 @@ augroup END
 command InvalidBinary :autocmd! BinaryXXD
 
 augroup cpp-path
-    autocmd!
-    autocmd FileType cpp setlocal path+=.,/usr/include,/usr/local/include,/usr/include/c++/4.8.1
+  autocmd!
+  autocmd FileType cpp setlocal path+=.,/usr/include,/usr/local/include,/usr/include/c++/4.8.1
 augroup END
 
 " pyenv
@@ -158,7 +158,7 @@ call neobundle#begin(expand('~/.vim/bundle/'))
 " Installation check
 if neobundle#exists_not_installed_bundles()
   echomsg 'Not installed bundles : ' .
-  	\ string(neobundle#get_not_installed_bundle_names())
+        \ string(neobundle#get_not_installed_bundle_names())
   echomsg 'Please execute ":NeoBundleInstall" command.'
   "finish
 endif
@@ -183,20 +183,17 @@ NeoBundle 'thinca/vim-quickrun'
 NeoBundle "jceb/vim-hier"
 NeoBundle 'scrooloose/syntastic'
 NeoBundle 'vim-scripts/VimClojure'
-"NeoBundle 'spolu/dwm.vim'
-NeoBundle 'tyru/caw.vim'
 NeoBundle 'Yggdroot/indentLine'
 NeoBundle 'sudo.vim'
 NeoBundle 'soramugi/auto-ctags.vim'
-"NeoBundle 'tpope/vim-surround'
 NeoBundle 'AnsiEsc.vim'
 NeoBundle 'Shougo/neocomplete.vim'
 NeoBundleLazy 'osyo-manga/vim-marching', {
-            \ 'depends' : ['Shougo/vimproc.vim', 'osyo-manga/vim-reunions'],
-            \ 'autoload' : {'filetypes' : ['c', 'cpp']}
-            \ }
-"NeoBundle 'Shougo/neosnippet'
-"NeoBundle 'SirVer/ultisnips'
+      \ 'depends' : ['Shougo/vimproc.vim', 'osyo-manga/vim-reunions'],
+      \ 'autoload' : {'filetypes' : ['c', 'cpp']}
+      \ }
+NeoBundle 'Shougo/neosnippet'
+NeoBundle 'Shougo/neosnippet-snippets'
 NeoBundle 'honza/vim-snippets'
 NeoBundleLazy 'osyo-manga/vim-stargate', {
       \ 'autoload' : {'filetypes' : 'cpp'}
@@ -221,17 +218,21 @@ NeoBundleLazy 'vim-jp/cpp-vim', {
       \}
 " javacomplete
 NeoBundleLazy 'vim-scripts/javacomplete', {
-\   'build': {
-\       'cygwin': 'javac autoload/Reflection.java',
-\       'mac': 'javac autoload/Reflection.java',
-\       'unix': 'javac autoload/Reflection.java',
-\   },
-\}
+      \   'build': {
+      \       'cygwin': 'javac autoload/Reflection.java',
+      \       'mac': 'javac autoload/Reflection.java',
+      \       'unix': 'javac autoload/Reflection.java',
+      \   },
+      \}
 " python
-"NeoBundleLazy "lambdalisue/vim-django-support", {
-"      \ "autoload": {
-"      \   "filetypes": ["python", "python3", "djangohtml"]
-"      \ }}
+NeoBundleLazy "lambdalisue/vim-django-support", {
+      \ "autoload": {
+      \   "filetypes": ["python", "python3", "djangohtml"]
+      \ }}
+NeoBundleLazy "jmcantrell/vim-virtualenv", {
+      \ "autoload": {
+      \   "filetypes": ["python", "python3", "djangohtml"]
+      \ }}
 NeoBundle 'davidhalter/jedi-vim'
 NeoBundleLazy "lambdalisue/vim-pyenv", {
       \ "depends": ['davidhalter/jedi-vim'],
@@ -369,11 +370,11 @@ let g:neocomplete#auto_completion_start_length = 2
 let g:neocomplete#skip_auto_completion_time = ""
 
 if !exists('g:neocomplete#keyword_patterns')
-    let g:neocomplete#keyword_patterns = {}
+  let g:neocomplete#keyword_patterns = {}
 endif
 let g:neocomplete#keyword_patterns._ = '\h\w*'
 if !exists('g:neocomplete#force_omni_input_patterns')
-    let g:neocomplete#force_omni_input_patterns = {}
+  let g:neocomplete#force_omni_input_patterns = {}
 endif
 
 if !exists('g:neocomplete#sources#dictionary#dictionaries')
@@ -388,13 +389,6 @@ call neocomplete#custom_source('_', 'matchers', ['matcher_head'])
 "let g:neocomplete#sources#include#paths = {
 "      \ 'cpp' : '.,/usr/include,/usr/include/c++/4.8.1,/usr/local/include'
 "      \ }
-
-"inoremap <expr><C-n>  pumvisible() ? '\<C-n>' : '\<C-x>\<C-u>\<C-p>'
-"inoremap <expr><CR>   pumvisible() ? '\<C-n>' . neocomplete#close_popup()  : '<CR>'
-"inoremap <expr><C-e>  pumvisible() ? neocomplete#close_popup() : '<End>'
-"inoremap <expr><C-c>  neocomplete#cancel_popup()
-"inoremap <expr><C-u>  neocomplete#undo_completion()
-"inoremap <expr><C-h>  neocomplete#smart_close_popup().'\<C-h>'
 
 "" ----- jedi-vim -----
 autocmd vimrc FileType python setlocal omnifunc=jedi#completions
@@ -492,61 +486,31 @@ nmap # <Plug>(anzu-sharp)
 " clear status
 nmap <Esc><Esc> <Plug>(anzu-clear-search-status)
 augroup vim-anzu
-    autocmd!
-    autocmd CursorHold,CursorHoldI,WinLeave,TabLeave * call anzu#clear_search_status()
+  autocmd!
+  autocmd CursorHold,CursorHoldI,WinLeave,TabLeave * call anzu#clear_search_status()
 augroup END
-
 
 " statusline
 set statusline=%{anzu#search_status()}
 
+"" ----- neosnippet -----
+" Plugin key-mappings.
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>     <Plug>(neosnippet_expand_target)
 
-"""" ----- neosnippet -----
-""
-""" Plugin key-mappings.
-""imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-""smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-""xmap <C-k>     <Plug>(neosnippet_expand_target)
-""
-""" SuperTab like snippets behavior.
-""imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-""\ "\<Plug>(neosnippet_expand_or_jump)"
-""\: pumvisible() ? "\<C-n>" : "\<TAB>"
-""smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-""\ "\<Plug>(neosnippet_expand_or_jump)"
-""\: "\<TAB>"
-""
-""" For snippet_complete marker.
-""if has('conceal')
+" SuperTab like snippets behavior.
+imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+      \ "\<Plug>(neosnippet_expand_or_jump)"
+      \: pumvisible() ? "\<C-n>" : "\<TAB>"
+smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+      \ "\<Plug>(neosnippet_expand_or_jump)"
+      \: "\<TAB>"
 
-"""" ----- neosnippet -----
-""
-""" Plugin key-mappings.
-""imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-""smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-""xmap <C-k>     <Plug>(neosnippet_expand_target)
-""
-""" SuperTab like snippets behavior.
-""imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-""\ "\<Plug>(neosnippet_expand_or_jump)"
-""\: pumvisible() ? "\<C-n>" : "\<TAB>"
-""smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-""\ "\<Plug>(neosnippet_expand_or_jump)"
-""\: "\<TAB>"
-""
-""" For snippet_complete marker.
-""if has('conceal')
-""  set conceallevel=2 concealcursor=i
-""endif
-
-" ----- ultisnips -----
-"  Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
-"let g:UltiSnipsExpandTrigger="<tab>"
-"let g:UltiSnipsJumpForwardTrigger="<c-b>"
-"let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-
-" If you want :UltiSnipsEdit to split your window.
-"let g:UltiSnipsEditSplit="vertical"
+" For snippet_complete marker.
+if has('conceal')
+  set conceallevel=2 concealcursor=i
+endif
 
 "" ----- indentLine -----
 let g:indentLine_char = '¦'
@@ -615,14 +579,6 @@ let g:syntastic_python_pep8_args='--ignore=E302,E501,E225,E226,E228,E265,E702,E7
 let g:syntastic_javascript_checkers = ['eslint']
 " SyntasticToggleMode を F4 で切り替え
 noremap <silent><F4> :SyntasticToggleMode<CR>
-
-" ----- caw -----
-" \c でコメントアウト
-nmap \c <Plug>(caw:I:toggle)
-vmap \c <Plug>(caw:I:toggle)
-" \C でコメントアウトの解除
-nmap \C <Plug>(caw:I:uncomment)
-vmap \C <Plug>(caw:I:uncomment)
 
 " ----- auto-ctags -----
 " 保存時に勝手にtagsファイルを作成する
