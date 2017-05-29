@@ -7,7 +7,7 @@ augroup vimrc
 augroup END
 
 """ Editor """
-set clipboard=unnamed,autoselect  " '+'とクリップボード共有
+"set clipboard=unnamed,autoselect  " '*'とクリップボード共有
 set smarttab
 set tabstop=2    " タブ幅
 set shiftwidth=2 " タブを挿入するときの幅
@@ -112,9 +112,16 @@ autocmd vimrc FileType coffee     setlocal sw=2 sts=2 ts=2 et
 " Jython
 autocmd BufRead,BufNewFile,BufReadPre *.jy set filetype=python
 
-""" source ~/.vimrc
+" source ~/.vimrc
 ca svimrc source<Space>~/.vimrc
 ca vdiffsplit vertical<Space>diffsplit
+
+" copy-paste
+vnoremap <C-y> "*y
+vnoremap <C-d> "*d
+nnoremap <C-y><C-y> "*yy
+nnoremap <C-d><C-d> "*dd
+nnoremap <C-p> "*p
 
 "" -b付きでバイナリモード
 "" http://d.hatena.ne.jp/rdera/20081022/1224682665
@@ -135,6 +142,7 @@ augroup cpp-path
     autocmd FileType cpp setlocal path+=.,/usr/include,/usr/local/include,/usr/include/c++/4.8.1
 augroup END
 
+" pyenv
 let $PATH = "~/.pyenv/shims:".$PATH
 
 """ NeoBundle """
@@ -166,6 +174,7 @@ NeoBundle 'Shougo/vimproc', {
       \    },
       \ }
 NeoBundle 'itchyny/lightline.vim'
+NeoBundle 'osyo-manga/vim-anzu'
 NeoBundle 'Lokaltog/vim-easymotion'
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'h1mesuke/unite-outline'
@@ -187,7 +196,7 @@ NeoBundleLazy 'osyo-manga/vim-marching', {
             \ 'autoload' : {'filetypes' : ['c', 'cpp']}
             \ }
 "NeoBundle 'Shougo/neosnippet'
-NeoBundle 'SirVer/ultisnips'
+"NeoBundle 'SirVer/ultisnips'
 NeoBundle 'honza/vim-snippets'
 NeoBundleLazy 'osyo-manga/vim-stargate', {
       \ 'autoload' : {'filetypes' : 'cpp'}
@@ -200,6 +209,7 @@ NeoBundle 'rollxx/vim-antlr'
 "NeoBundle 'https://bitbucket.org/kovisoft/slimv'
 " git
 NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'airblade/vim-gitgutter'
 " ruby
 NeoBundle 'tpope/vim-rails'
 NeoBundle 'tpope/vim-endwise'
@@ -223,11 +233,11 @@ NeoBundleLazy 'vim-scripts/javacomplete', {
 "      \   "filetypes": ["python", "python3", "djangohtml"]
 "      \ }}
 NeoBundle 'davidhalter/jedi-vim'
-"NeoBundleLazy "lambdalisue/vim-pyenv", {
-"      \ "depends": ['davidhalter/jedi-vim'],
-"      \ "autoload": {
-"      \   "filetypes": ["python", "python3", "djangohtml"]
-"      \ }}
+NeoBundleLazy "lambdalisue/vim-pyenv", {
+      \ "depends": ['davidhalter/jedi-vim'],
+      \ "autoload": {
+      \   "filetypes": ["python", "python3", "djangohtml"]
+      \ }}
 "" javascript / node.js
 NeoBundle 'jelera/vim-javascript-syntax'
 NeoBundle 'mxw/vim-jsx'
@@ -319,34 +329,41 @@ nnoremap <silent> ,vcb :Unite build:!<CR>
 nnoremap <silent> ,vch :UniteBuildClearHighlight<CR>
 
 "" ----- neocomplete -----
+let g:acp_enableAtStartup = 0
 let g:neocomplete#enable_at_startup = 1
 let g:neocomplete#enable_smart_case = 1
 let g:neocomplete#enable_fuzzy_completion = 1
-let g:neocomplete#sources#syntax#min_keyword_length = 3
+let g:neocomplete#sources#syntax#min_keyword_length = 2
 let g:neocomplete#auto_completion_start_length = 2
 let g:neocomplete#manual_completion_start_length = 0
-"let g:neocomplete#min_keyword_length = 3
-"let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
-inoremap <expr><C-g> neocomplete#undo_completion()
-inoremap <expr><C-l> neocomplete#complete_common_string()
+let g:neocomplete#min_keyword_length = 3
+let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
 
-let g:neocomplete#enable_auto_select = 1
+inoremap <expr> <C-g> neocomplete#undo_completion()
+inoremap <expr> <C-l> neocomplete#complete_common_string()
+" <TAB>: completion.
+inoremap <expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+" <CR>: close popup and save indent.
+inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+function! s:my_cr_function()
+  return neocomplete#close_popup() . "\<CR>"
+  " For no inserting <CR> key.
+  "return pumvisible() ? neocomplete#close_popup() : "\<CR>"
+endfunction
+" Close popup by <Space>.
+"inoremap <expr><Space> pumvisible() ? neocomplete#close_popup() : "\<Space>"
+
+let g:neocomplete#enable_auto_select = 0
 let g:neocomplete#enable_refresh_always = 0
 
 let g:neocomplcache_enable_quick_match = 1
 
-let g:acp_enableAtStartup = 0
-let g:neocomplete#enable_at_startup = 1
-let g:neocomplete#enable_smart_case  = 1
-let g:neocomplete#sources#syntax#min_keyword_length = 3
-let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
-
 let g:neocomplete#enable_auto_delimiter = 1
 let g:neocomplete#enable_auto_close_preview = 1
-"let g:neocomplete#enable_ignore_case = 1
+let g:neocomplete#enable_ignore_case = 1
 "let g:neocomplete#enable_fuzzy_completion = 0
 
-"let g:neocomplete#auto_completion_start_length = 2
+let g:neocomplete#auto_completion_start_length = 2
 "let g:neocomplete#manual_completion_start_length = 0
 
 let g:neocomplete#skip_auto_completion_time = ""
@@ -381,13 +398,12 @@ call neocomplete#custom_source('_', 'matchers', ['matcher_head'])
 
 "" ----- jedi-vim -----
 autocmd vimrc FileType python setlocal omnifunc=jedi#completions
-"let g:jedi#popup_select_first = 0
+let g:jedi#completions_enabled = 0 " 勝手に自動補完しない
 let g:jedi#auto_vim_configuration = 0
-let g:neocomplete#force_omni_input_patterns.python = '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
+let g:neocomplete#force_omni_input_patterns.python = '\%(\<[^. \t/]\+\>\|[^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
+"let g:jedi#popup_select_first = 0
 " docstringは表示しない
 autocmd vimrc FileType python setlocal completeopt-=preview
-" 勝手に自動補完しない
-let g:jedi#completions_enabled = 0
 
 "" ----- vim-marching -----
 let g:marching_enable_neocomplete = 1
@@ -414,12 +430,94 @@ hi EasyMotionShade  ctermbg=none ctermfg=blue
 set guifont=Ricty\ for\ Powerline\ 10
 let g:lightline = {
       \ 'colorscheme': 'wombat',
+      \ 'active': {
+      \  'left': [
+      \    ['mode', 'paste'],
+      \    ['fugitive', 'gitgutter', 'readonly', 'filename', 'modified', 'anzu']
+      \  ]
+      \ },
       \ 'component': {
       \   'readonly': '%{&readonly?"x":""}',
+      \ },
+      \ 'component_function': {
+      \   'anzu': 'anzu#search_status',
+      \   'fugitive': 'MyFugitive',
+      \   'gitgutter': 'MyGitGutter'
       \ },
       \ 'separator': { 'left': "\u2b80", 'right': "\u2b82" },
       \ 'subseparator': { 'left': "\u2b81", 'right': "\u2b83" }
       \ }
+
+"" ----- vim-fugitive -----
+function! MyFugitive()
+  try
+    if &ft !~? 'vimfiler\|gundo' && exists('*fugitive#head')
+      let _ = fugitive#head()
+      return strlen(_) ? '⭠ '._ : ''
+    endif
+  catch
+  endtry
+  return ''
+endfunction
+
+"" ----- vim-gitgutter -----
+function! MyGitGutter()
+  if ! exists('*GitGutterGetHunkSummary')
+        \ || ! get(g:, 'gitgutter_enabled', 0)
+        \ || winwidth('.') <= 90
+    return ''
+  endif
+  let symbols = [
+        \ g:gitgutter_sign_added . ' ',
+        \ g:gitgutter_sign_modified . ' ',
+        \ g:gitgutter_sign_removed . ' '
+        \ ]
+  let hunks = GitGutterGetHunkSummary()
+  let ret = []
+  for i in [0, 1, 2]
+    if hunks[i] > 0
+      call add(ret, symbols[i] . hunks[i])
+    endif
+  endfor
+  return join(ret, ' ')
+endfunction
+
+"" ----- vim-anzu -----
+" mapping
+nmap n <Plug>(anzu-n)
+nmap N <Plug>(anzu-N)
+nmap * <Plug>(anzu-star)
+nmap # <Plug>(anzu-sharp)
+
+" clear status
+nmap <Esc><Esc> <Plug>(anzu-clear-search-status)
+augroup vim-anzu
+    autocmd!
+    autocmd CursorHold,CursorHoldI,WinLeave,TabLeave * call anzu#clear_search_status()
+augroup END
+
+
+" statusline
+set statusline=%{anzu#search_status()}
+
+
+"""" ----- neosnippet -----
+""
+""" Plugin key-mappings.
+""imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+""smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+""xmap <C-k>     <Plug>(neosnippet_expand_target)
+""
+""" SuperTab like snippets behavior.
+""imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+""\ "\<Plug>(neosnippet_expand_or_jump)"
+""\: pumvisible() ? "\<C-n>" : "\<TAB>"
+""smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+""\ "\<Plug>(neosnippet_expand_or_jump)"
+""\: "\<TAB>"
+""
+""" For snippet_complete marker.
+""if has('conceal')
 
 """" ----- neosnippet -----
 ""
@@ -443,12 +541,12 @@ let g:lightline = {
 
 " ----- ultisnips -----
 "  Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+"let g:UltiSnipsExpandTrigger="<tab>"
+"let g:UltiSnipsJumpForwardTrigger="<c-b>"
+"let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
 " If you want :UltiSnipsEdit to split your window.
-let g:UltiSnipsEditSplit="vertical"
+"let g:UltiSnipsEditSplit="vertical"
 
 "" ----- indentLine -----
 let g:indentLine_char = '¦'
