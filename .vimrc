@@ -122,6 +122,7 @@ vnoremap <C-d> "*d
 nnoremap <C-y><C-y> "*yy
 nnoremap <C-d><C-d> "*dd
 nnoremap <C-p> "*p
+nnoremap <C-P> "*P
 
 "" -b付きでバイナリモード
 "" http://d.hatena.ne.jp/rdera/20081022/1224682665
@@ -537,15 +538,18 @@ let g:quickrun_config = {
       \     ]
       \ },
       \ "html" : {
-      \     "exec" : "xdg-open %s:p",
+      \     "exec" : "open %s:p",
       \ },
       \ "tex": {
       \     "command" : "platex",
       \     "exec" : [
       \         "%c %s", "%c %s",
       \         "dvipdfmx %s:r.dvi",
-      \         "xdg-open %s:r.pdf"
+      \         "open %s:r.pdf"
       \     ],
+      \ },
+      \ "javascript.jsx": {
+      \     "command" : "node",
       \ },
       \}
 " <C-c>でquickrunを強制終了
@@ -621,7 +625,7 @@ let g:Tex_CompileRule_dvi = 'uplatex -synctex=1 -interaction=nonstopmode -file-l
 let g:Tex_BibtexFlavor = 'upbibtex'
 let g:Tex_MakeIndexFlavor = 'mendex -U $*.idx'
 let g:Tex_UseEditorSettingInDVIViewer = 1
-let g:Tex_ViewRule_pdf = 'xdg-open'
+let g:Tex_ViewRule_pdf = 'open'
 "let g:Tex_ViewRule_pdf = 'evince'
 "let g:Tex_ViewRule_pdf = 'okular --unique'
 "let g:Tex_ViewRule_pdf = 'zathura -s -x "vim --servername synctex -n --remote-silent +\%{line} \%{input}"'

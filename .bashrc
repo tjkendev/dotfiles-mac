@@ -152,9 +152,6 @@ if [ -d ~/.rbenv ]; then
   eval "$(rbenv init -)"
 fi
 
-# pbcopy
-alias pbcopy='xsel --clipboard --input'
-
 # mysql
 export PATH=/usr/local/mysql/bin:$PATH
 
@@ -168,4 +165,9 @@ if which peco &>/dev/null; then
       ag -h
     fi
   }
+fi
+
+# haskell
+if [ -d ~/.cabal ]; then
+  export PATH=$PATH:~/.cabal/bin
 fi

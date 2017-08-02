@@ -1,3 +1,4 @@
+eval $(/usr/libexec/path_helper -s)
 
 export EDITOR=vim
 export LANG=ja_JP.UTF-8
@@ -28,16 +29,30 @@ setopt bang_hist          # '!'
 setopt extended_history   # ヒストリに実行時間も保存
 setopt hist_ignore_dups   # 直前の同じコマンドは保存しない
 setopt share_history      # 他のシェルのヒストリを共有
+setopt append_history     # historyに上書きではなく追加
 setopt hist_reduce_blanks # 余分なスペース削除
-
 
 export CLICOLOR=true # lsコマンド色付き
 
+autoload -Uz vcs_info
+zstyle ':vcs_info:*' formats '[%b]'
+zstyle ':vcs_info:*' actionformats '[%b|%a]'
+precmd () {
+  local left=' %{\e[38;5;2m%}(%~)%{\e[m%}'
+  vcs_info
+  local right="%{\e[38;5;32m%}${vcs_info_msg_0_}%{\e[m%}"
+  local invisible='%([BSUbfksu]|([FK]|){*})'
+  local leftwidth=${#${(S%%)left//$~invisible/}}
+  local rightwidth=${#${(S%%)right//$~invisible/}}
+  local padwidth=$(($COLUMNS - ($leftwidth + $rightwidth) % $COLUMNS))
+
+  print -P $left${(r:$padwidth:: :)}$right
+}
 
 autoload -U colors; colors # プロンプト色付き
 # 通常
-tmp_prompt="%{${fg[cyan]}%}%n%# %{${reset_color}%}"
-tmp_prompt2="%{${fg[cyan]}%}%_> %{${reset_color}%}"
+tmp_prompt="%{${bg[green]}%}%n%{${reset_color}%} $ "
+tmp_prompt2="%{${fg[white]}%}%_> %{${reset_color}%}"
 tmp_rprompt="%{${fg[green]}%}[%~]%{${reset_color}%}"
 tmp_sprompt="%{${fg[yellow]}%}%r is correct? [Yes, No, Abort, Edit]:%{${reset_color}%}"
 
@@ -51,13 +66,20 @@ fi
 
 PROMPT=$tmp_prompt    # 通常のプロンプト
 PROMPT2=$tmp_prompt2  # セカンダリのプロンプト(コマンドが2行以上の時に表示される)
-RPROMPT=$tmp_rprompt  # 右側のプロンプト
+#RPROMPT=$tmp_rprompt  # 右側のプロンプト
 SPROMPT=$tmp_sprompt  # スペル訂正用プロンプト
+
+# 現在時刻
+RPROMPT=$'%{\e[38;5;251m%}%D{%b%/%d}, %*%{\e[m%}'
+#TMOUT=5
+#TRAPALRM() {
+#  zle reset-prompt
+#}
 
 # alias
 alias l='ls'
 alias la='ls -a'
-alias ll='ll -la'
+alias ll='ls -la'
 
 alias h='history'
 
@@ -71,6 +93,7 @@ export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
 
 # jenv
+export PATH="$HOME/.jenv/bin:$PATH"
 if which jenv > /dev/null; then eval "$(jenv init -)"; fi
 
 # pyenv
@@ -93,4 +116,22 @@ alias winefile32='WINEARCH=win32 WINEPREFIX=~/.wine32 winefile'
 alias winegcc32='WINEARCH=win32 WINEPREFIX=~/.wine32 winegcc'
 alias wineg++32='WINEARCH=win32 WINEPREFIX=~/.wine32 wineg++'
 alias winepath32='WINEARCH=win32 WINEPREFIX=~/.wine32 winepath'
-eval $(/usr/libexec/path_helper -s)
+
+# 追加するhistory設定
+zshaddhistory() {
+    local line=${1%%$'\n'}
+    local cmd=${line%% *}
+
+    [[ ${#line} -ge 4
+        && ${cmd} != (l|l[sal])
+        && ${cmd} != (h|history)
+        && ${cmd} != (a|./*.out)
+        && ${cmd} != (c|cd)
+        && ${cmd} != (m|man)
+    ]]
+}
+
+# haskell
+if [ -d ~/.cabal ]; then
+  export PATH=$PATH:~/.cabal/bin
+fi
